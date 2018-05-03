@@ -37,7 +37,7 @@ export default {
         return
       }
       this.loadingFlag = true
-      const url = `http://3g.163.com/touch/jsonp/sy/recommend/${this.reqInd}-${
+      const url = `https://3g.163.com/touch/jsonp/sy/recommend/${this.reqInd}-${
         this.reqNum
       }.html?hasad=1&miss=57&refresh=A`
       this.reqInd += this.reqNum
