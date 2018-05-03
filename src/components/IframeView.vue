@@ -56,7 +56,8 @@ export default {
       scrolling: 'auto',
       width: '100%',
       height: '100%',
-      showing: false
+      showing: false,
+      loaded: false
     }
   },
   // watch: {
@@ -81,16 +82,28 @@ export default {
       : 'auto'
     this.width = document.documentElement.clientWidth
     this.height = document.documentElement.clientHeight
+    const ifr = this.$refs.ifr
+    const self = this
+    ifr.onload = function() {
+      console.log('onload')
+      if (self.loaded) {
+        self.showing = false
+        // location.hash = ''
+        return;
+      }
+      self.loaded = true
+    }
   },
   methods: {
     fadeIn(src) {
+      this.loaded = false
       this.$refs.ifr.src = location.protocol + '//' + src.split('//')[1]
       this.showing = true
       location.hash = 'detail'
     },
     fadeOut() {
       this.showing = false
-      this.$refs.ifr.src = null
+      this.$refs.ifr.src = ''
     }
   }
 }
