@@ -48,7 +48,7 @@
       </div>
     </div>
     <div v-if="info.picInfo && info.picInfo.length" class="pic">
-      <img :src="info.picInfo[0].url">
+      <img :src="imgUrl">
     </div>
   </div>
 </template>
@@ -66,6 +66,9 @@ export default {
   computed: {
     info() {
       return this.data.info
+    },
+    imgUrl() {
+      return this.info.picInfo[0].url.replace(/http:/, location.protocol)
     }
   },
   mounted() {
