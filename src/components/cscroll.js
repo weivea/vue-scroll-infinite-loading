@@ -1,7 +1,7 @@
 function CScroll(el, options) {
   this.wrapper = typeof el == 'string' ? document.querySelector(el) : el
   this.options = {
-    preventDefault: true,
+    preventDefault: false,
     disableMouse: false,
     disablePointer: false,
     disableTouch: false
@@ -203,10 +203,10 @@ CScroll.prototype = {
   },
 
   _move: function(e) {
-    if (this.options.preventDefault) {
+    // if (this.options.preventDefault) {
       // increases performance on Android? TODO: check!
       e.preventDefault()
-    }
+    // }
 
     if (this.eventType[e.type] !== this.initiated) {
       return

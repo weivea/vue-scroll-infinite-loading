@@ -7,7 +7,7 @@
 </style>
 <template>
   <div class="scroll" :style="{height: height}">
-    <scroll-item v-for="(item, ind) in itemList" :key="item.data" :way="item.way" :data="item.data"></scroll-item>
+    <scroll-item v-for="(item, ind) in itemList" :key="item.data.ind" :way="item.way" :data="item.data"></scroll-item>
   </div>
 </template>
 <script>
@@ -35,7 +35,7 @@ export default {
     // const Scroll = getXScroll()
     this.warpHeight = this.$el.getBoundingClientRect().height
     scroller = new Scroll(this.$el, {
-      preventDefault: true
+      // preventDefault: true
     })
     scroller.on('scrollStart', () => {})
     scroller.on('scrolling', ({ distX, distY }) => {
@@ -44,7 +44,7 @@ export default {
     scroller.on('scrollEnd', () => {
       this.scrollEnd()
     })
-    this.addChild()
+    
   },
   props: ['height'],
   methods: {
@@ -102,12 +102,32 @@ export default {
     },
     addChild(way = 1) {
       // this.refreshItemY()
-      if (way > 0) {
-        this.itemList.push({ way, data: this.indNum })
-      } else {
-        this.itemList.unshift({ way, data: this.indNum })
+      ((_way ,_indNum) => {
+        this.$parent.addChild(_way, (info) => {
+          if (_way > 0) {
+            this.itemList.push({
+              way: _way,
+              data: {
+                ind: _indNum,
+                info
+              },
+            })
+          } else {
+            this.itemList.unshift({
+              way: _way,
+              data: {
+                ind: _indNum,
+                info
+              },
+            })
+          }
+        })
+      })(way, this.indNum)
+      
+      this.indNum++;
+      if (this.indNum > 1000) {
+        this.indNum = 0
       }
-      this.indNum++
     },
     refreshItemY() {
       elList.forEach(item => {

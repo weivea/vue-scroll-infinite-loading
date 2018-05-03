@@ -5,11 +5,51 @@
   top: 0;
   left: 0;
   width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  padding: 5px 10px;
+}
+.words {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  padding-right: 10px;
+  text-align: left;
+}
+.words .t{
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.words .source, .words .date{
+  font-size: 12px;
+  color: #eee
+}
+.pic{
+  width: 140px;
+}
+.pic img{
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>
 <template>
-  <div class="b" :style="{background: background}">
-    {{data}}
+  <div class="b" :style="{background: background}" @click="goLink">
+    <div class="words">
+      <div class="t">
+        {{info.title}}
+      </div>
+      <div class="source">
+        {{info.source}}
+      </div>
+      <div class="date">
+        {{info.ptime}}
+      </div>
+    </div>
+    <div v-if="info.picInfo && info.picInfo.length" class="pic">
+      <img :src="info.picInfo[0].url">
+    </div>
   </div>
 </template>
 <script>
@@ -23,6 +63,11 @@ export default {
     }
   },
   props: ['way', 'data'],
+  computed: {
+    info() {
+      return this.data.info
+    }
+  },
   mounted() {
     this.$el.style[this.styleName.transform] = `translate(0px,0px)`
     this.$el.style[prefixStyle('transitionTimingFunction')] =
@@ -38,7 +83,6 @@ export default {
   },
   methods: {
     placeChange(y) {
-      
       this.$el.style[this.styleName.transform] = `translate(0px,${y}px)`
     },
     getComputedPosition() {
@@ -49,6 +93,9 @@ export default {
       x = +(matrix[12] || matrix[4])
       y = +(matrix[13] || matrix[5])
       return { x: x, y: y }
+    },
+    goLink() {
+      this.$root.$children[0].$refs.ifr.fadeIn(this.info.link)
     }
   }
 }
