@@ -1,21 +1,11 @@
 # vue-scroll-infinite-loading
+一个上滑，下滑都可以无限加载的feed流Demo。
 
-> A Vue.js project
+**PS: 新闻数据接口来自网易新闻api**
 
-## Build Setup
+扫码查看效果
 
-``` bash
-# install dependencies
-npm install
+![二维码](./erweima.jpeg)
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+效果
+![图片](./scroll.gif)
